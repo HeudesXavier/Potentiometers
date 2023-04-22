@@ -1,0 +1,36 @@
+#include "mbed.h"
+#include "C12832.h"
+
+
+
+// Initialize PWM output pin connected to LED1
+PwmOut led1(LED1);
+
+// Initialize analog input pin connected to potentiometer
+AnalogIn pot1(p19);
+
+// Initialize LCD object
+C12832 lcd(p5, p7, p6, p8, p11);
+
+int main() {
+    
+    lcd.cls();
+    lcd.printf("Helllo Word");
+
+    // Loop infinitely
+    while (1) {
+        // Read the potentiometer value and set the LED brightness accordingly
+        led1 = pot1;
+        
+        // Print the value of pot1 twice on the LCD
+        lcd.cls();
+        lcd.locate(0, 0);
+        lcd.printf("Pot value: %.2f", pot1.read());
+        lcd.locate(0, 0);
+        lcd.printf("Pot value: %.2e", pot1.read());
+
+        // Wait for a small amount of time before repeating the loop
+        wait(0.01);
+    }
+    
+}
